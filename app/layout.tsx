@@ -11,8 +11,9 @@ import SearchModal from './components/modals/SearchModal';
 const font = Nunito({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Airbnb',
+  title: 'Airbnb | Holiday rentals, cabins, beach houses & more',
   description: 'Airbnb clone',
+  icons: "https://www.seekpng.com/png/full/957-9571167_airbnb-png.png",
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
