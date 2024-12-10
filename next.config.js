@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    appDir: true, // Keep appDir enabled for experimental features
+  },
   images: {
-    domains: ['avatars.githubusercontent.com', 'lh3.googleusercontent.com', 'res.cloudinary.com'],
+    domains: ["lh3.googleusercontent.com", "res.cloudinary.com"],
   },
 };
 
