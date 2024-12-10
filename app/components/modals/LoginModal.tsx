@@ -2,7 +2,6 @@
 
 import { signIn } from 'next-auth/react';
 import axios from 'axios';
-import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useCallback, useState } from 'react';
 import { FieldValues, RegisterOptions, SubmitHandler, UseFormRegisterReturn, useForm } from 'react-hook-form';
@@ -60,7 +59,7 @@ const LoginModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome back" subtitle="Login to your account!" />
+      <Heading title="Welcome Back" subtitle="Login to your account!" center />
       <Input id="email" label="Email" register={register} errors={errors} required />
       <Input id="password" label="Password" type="password" register={register} errors={errors} required />
     </div>
@@ -70,11 +69,10 @@ const LoginModal = () => {
     <div className="flex flex-col gap-4 mt-3">
       <hr />
       <Button outline label="Continue with Google" icon={FcGoogle} onClick={() => signIn('google')} />
-      <Button outline label="Continue with Github" icon={AiFillGithub} onClick={() => signIn('github')} />
-
+      
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="justify-center flex flex-row items-start gap-2">
-          <div>First time using Airbnb?</div>
+          <div>Didn't have an Account?</div>
           <div onClick={toggle} className="text-neutral-800 cursor-pointer hover:underline ">
             Create an account
           </div>

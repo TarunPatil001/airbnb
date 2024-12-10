@@ -1,15 +1,18 @@
 'use client';
 
-import useLoginModal from '@/app/hooks/useLoginModal';
 import { SafeUser } from '@/app/types';
 import { signOut } from 'next-auth/react';
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
-import useRegisterModal from '../../hooks/useRegisterModal';
 import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
-import useRentModal from '@/app/hooks/useRentModal';
 import { useRouter } from 'next/navigation';
+import ClickAwayListener from 'react-click-away-listener';
+import useLoginModal from '@/app/hooks/useLoginModal';
+import useRegisterModal from '../../hooks/useRegisterModal';
+import useRentModal from '@/app/hooks/useRentModal';
+import Image from 'next/image';
+import { toast } from 'react-hot-toast';
 
 interface Props {
   currentUser: SafeUser | null;
@@ -49,54 +52,105 @@ const UserMenu: React.FC<Props> = ({ currentUser }) => {
           onClick={toggleOpen}
         >
           <AiOutlineMenu />
-          <div className="hidden md:block">
-            <Avatar src={currentUser?.image} />
+          <div className="max-md:hidden md:block">
+            {currentUser ? (
+              <Avatar src={currentUser?.image!} userName={currentUser?.name} />
+            ) : (
+              <Image
+                className="rounded-full"
+                height="30"
+                width="30"
+                alt="Avatar"
+                src="/images/placeholder.svg"
+              />
+            )}
           </div>
         </div>
       </div>
 
-      {isOpen && (
-        <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
-          <div className="flex flex-col cursor-pointer">
-            {currentUser ? (
-              <>
-                <MenuItem
-                  onClick={() => {
-                    router.push('/trips');
-                  }}
-                  label="My trips"
-                />
-                <MenuItem
-                  onClick={() => {
-                    router.push('/favorites');
-                  }}
-                  label="My favorites"
-                />
-                <MenuItem
-                  onClick={() => {
-                    router.push('/reservations');
-                  }}
-                  label="My reservations"
-                />
-                <MenuItem
-                  onClick={() => {
-                    router.push('/properties');
-                  }}
-                  label="My properties"
-                />
-                <MenuItem onClick={rentModal.onOpen} label="Airbnb my home" />
-                <hr />
-                <MenuItem onClick={() => signOut()} label="Logout" />
-              </>
-            ) : (
-              <>
-                <MenuItem onClick={loginModal.onOpen} label="Login" />
-                <MenuItem onClick={registerModal.onOpen} label="Sign up" />
-              </>
-            )}
-          </div>
+      <ClickAwayListener onClickAway={() => setIsOpen(false)}>
+        <div>
+          {isOpen && (
+            <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
+              <div className="flex flex-col cursor-pointer">
+                {currentUser ? (
+                  <>
+                    <MenuItem
+                      onClick={() => {
+                        router.push("/");
+                        setIsOpen(false);
+                      }}
+                      label="Home"
+                    />
+                    <MenuItem
+                      onClick={() => {
+                        router.push("/trips");
+                        setIsOpen(false);
+                      }}
+                      label="My trips"
+                    />
+                    <MenuItem
+                      onClick={() => {
+                        router.push("/favorites");
+                        setIsOpen(false);
+                      }}
+                      label="My favorites"
+                    />
+                    <MenuItem
+                      onClick={() => {
+                        router.push("/reservations");
+                        setIsOpen(false);
+                      }}
+                      label="My reservations"
+                    />
+                    <MenuItem
+                      onClick={() => {
+                        router.push("/properties");
+                        setIsOpen(false);
+                      }}
+                      label="My properties"
+                    />
+                    <MenuItem
+                      onClick={() => {
+                        onRent();
+                        setIsOpen(false);
+                      }}
+                      label="Airbnb your home"
+                    />
+                    <hr />
+                    <MenuItem
+                      onClick={() => {
+                        signOut();
+                        setIsOpen(false);
+                        toast.success("Logout!");
+                      }}
+                      label="Logout"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <MenuItem
+                      onClick={() => {
+                        loginModal.onOpen();
+                        setIsOpen(false);
+                      }}
+                      label="Login"
+                    />
+                    <MenuItem
+                      onClick={() => {
+                        registerModal.onOpen();
+                        setIsOpen(false);
+                      }}
+                      label="Sign up"
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </ClickAwayListener>
+
     </div>
   );
 };

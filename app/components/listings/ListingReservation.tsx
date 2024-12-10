@@ -39,7 +39,7 @@ const ListingReservation: React.FC<Props> = ({
       </div>
       <div className="p-4 flex flex-row items-center justify-between font-semibold text-lg">
         <div>Total</div>
-        <div>$ {totalPrice}</div>
+        <div>₹ {totalPrice.toLocaleString()}</div>
       </div>
     </div>
   );

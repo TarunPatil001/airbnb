@@ -8,7 +8,7 @@ import ToasterProvider from './providers/ToasterProvider';
 import RentModal from './components/modals/RentModal';
 import SearchModal from './components/modals/SearchModal';
 
-const inter = Nunito({ subsets: ['latin'] });
+const font = Nunito({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Airbnb',
@@ -20,7 +20,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={font.className}>
         <ToasterProvider />
         <LoginModal />
         <SearchModal />

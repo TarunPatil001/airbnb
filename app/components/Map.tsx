@@ -2,8 +2,9 @@
 
 import L from 'leaflet';
 
-import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import Flag from "react-world-flags";
 
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -19,8 +20,9 @@ L.Icon.Default.mergeOptions({
 
 interface Props {
   center?: number[];
+  locationValue?: string;
 }
-const Map: React.FC<Props> = ({ center }) => {
+const Map: React.FC<Props> = ({ center, locationValue }) => {
   return (
     <MapContainer
       center={(center as L.LatLngExpression) || [51, -0.09]}
@@ -33,7 +35,14 @@ const Map: React.FC<Props> = ({ center }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {center && <Marker position={center as L.LatLngExpression} />}
+      {center && 
+      <Marker position={center as L.LatLngExpression}> 
+        <Popup>
+          <div className="flex justify-center items-center animate-bounce">
+            <Flag code={locationValue} className="w-10" />
+          </div>
+        </Popup>
+      </Marker>}
     </MapContainer>
   );
 };
