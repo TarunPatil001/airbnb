@@ -1,5 +1,5 @@
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import primsa from '@/app/libs/prismadb';
+import prisma from '@/app/libs/prismadb';
 import { NextResponse } from 'next/server';
 
 interface IPararms {
@@ -23,7 +23,7 @@ export const POST = async (request: Request, { params }: { params: IPararms }) =
 
   favoriteIds.push(listingId);
 
-  const user = await primsa.user.update({ where: { id: currentUser.id }, data: { favoriteIds } });
+  const user = await prisma.user.update({ where: { id: currentUser.id }, data: { favoriteIds } });
 
   return NextResponse.json(user);
 };
@@ -45,7 +45,7 @@ export const DELETE = async (request: Request, { params }: { params: IPararms })
 
   favoriteIds = favoriteIds.filter((id) => id !== listingId);
 
-  const user = await primsa.user.update({ where: { id: currentUser.id }, data: { favoriteIds } });
+  const user = await prisma.user.update({ where: { id: currentUser.id }, data: { favoriteIds } });
 
   return NextResponse.json(user);
 };

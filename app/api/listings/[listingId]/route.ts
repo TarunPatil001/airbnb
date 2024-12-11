@@ -1,5 +1,5 @@
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import primsa from '@/app/libs/prismadb';
+import prisma from '@/app/libs/prismadb';
 import { NextResponse } from 'next/server';
 
 interface IPararms {
@@ -19,7 +19,7 @@ export const DELETE = async (request: Request, { params }: { params: IPararms })
     throw new Error('Invalid ID');
   }
 
-  const listing = await primsa.listing.deleteMany({
+  const listing = await prisma.listing.deleteMany({
     where: { id: listingId, userId: currentUser.id },
   });
 
